@@ -15,3 +15,10 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+app.get("/urls.json", (req, res) => {
+  res.json(urlDatabase);
+});
+
+//In the browser => http://localhost:8080/urls.json => 
+//We expect to see a JSON string representing the entire urlDatabase object
