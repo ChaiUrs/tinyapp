@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/ChaiUrs/tinyapp/issues"
   },
-  "homepage": "https://github.com/ChaiUrs/tinyapp#readme"
+  "homepage": "https://github.com/ChaiUrs/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
