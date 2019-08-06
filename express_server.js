@@ -47,12 +47,13 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${newRandomURL}`);
 });
 
+//Added a POST route that removes an existing shortened URLs from database
 app.post('/urls/:shortURL/delete', (req, res) => {
   delete urlDatabase[req.params.shortURL];
   res.redirect('/urls')
 });
 
-//Added a POST route that updates a URL resource; 
+//Added a POST route that updates a URL resource
 app.post('/urls/:shortURL', (req, res) => {
   urlDatabase[req.params.shortURL] = req.body.longURL;
   res.redirect('/urls')
