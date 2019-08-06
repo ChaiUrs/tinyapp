@@ -52,6 +52,12 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   res.redirect('/urls')
 });
 
+//Added a POST route that updates a URL resource; 
+app.post('/urls/:shortURL', (req, res) => {
+  urlDatabase[req.params.shortURL] = req.body.longURL;
+  res.redirect('/urls')
+});    
+
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
@@ -60,12 +66,6 @@ app.get("/urls/:shortURL", (req, res) => {
   let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.longURL] };
   res.render("urls_show", templateVars);
 });
-
-//Added a POST route that updates a URL resource; 
-app.post('/urls/:shortURL', (req, res) => {
-  urlDatabase[req.params.shortURL] = req.body.longURL;
-  res.redirect('/urls')
-});        
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
