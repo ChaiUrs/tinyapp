@@ -10,12 +10,14 @@ const generateRandomString = function(charsLength) {
 };
 //console.log(generateRandomString(6));
 
-const express = require("express");
+const express = require('express');
 const app = express();
 const PORT = 8080; // default port 8080
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 app.set("view engine", "ejs"); //Set ejs as the view engine
 
 const urlDatabase = {
