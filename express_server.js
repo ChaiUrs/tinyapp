@@ -20,7 +20,8 @@ app.set("view engine", "ejs"); //Set ejs as the view engine
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "9sm5xK": "http://www.google.com",
+  "cp26bm": "http://www.instagram.com"
 };
 
 app.get("/", (req, res) => {
@@ -56,9 +57,15 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: req.params.longURL };
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.longURL] };
   res.render("urls_show", templateVars);
 });
+
+//Added a POST route that updates a URL resource; 
+app.post('/urls/:shortURL', (req, res) => {
+  urlDatabase[req.params.shortURL] = req.body.longURL;
+  res.redirect('/urls')
+});        
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
