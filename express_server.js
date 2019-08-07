@@ -98,7 +98,6 @@ app.post('/login', (req, res) => {
 
 //Added a LOGOUT route
 app.post('/logout', (req, res) => {
-  // clear username cookie
   res.clearCookie('username');
   res.redirect('/urls');
 });
