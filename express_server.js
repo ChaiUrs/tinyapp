@@ -20,6 +20,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set('view engine', 'ejs'); //Set ejs as the view engine
 
+let templateVars = {
+
+};
+
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com",
@@ -42,7 +46,7 @@ app.get('/u/:shortURL', (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars = { 
+  let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.longURL],
     username: req.cookies.username
@@ -81,7 +85,7 @@ app.get('/urls/new', (req, res) => {
 //Added a POST route that removes an existing shortened URLs from database
 app.post('/urls/:shortURL/delete', (req, res) => {
   delete urlDatabase[req.params.shortURL];
-  res.redirect('/urls')
+  res.redirect('/urls');
 });
 
 //Added a LOGIN route
@@ -108,7 +112,7 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-/* 
+/*
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
@@ -120,5 +124,5 @@ app.get("/set", (req, res) => {
 
 app.get("/fetch", (req, res) => {
   res.send(`a = ${a}`);
-}); 
+});
 */
