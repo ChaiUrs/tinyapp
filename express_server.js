@@ -61,6 +61,14 @@ app.post('/urls/:shortURL', (req, res) => {
   res.redirect('/urls')
 });    
 
+//Added a LOGIN route
+app.post('/login', (req, res) => {
+  //set a cookie "username" to the value submitted in request body
+  console.log(req.body.username);
+  res.cookie('username', req.body.username);
+  res.redirect('/urls');
+});
+
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
