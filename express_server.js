@@ -39,7 +39,7 @@ app.get('/urls', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
-  console.log(req.body);  // Log the POST request body to the console
+  //console.log(req.body);  // Log the POST request body to the console
   let newRandomURL = generateRandomString(6);
   urlDatabase[newRandomURL] = req.body.longURL;
   console.log(urlDatabase);
@@ -60,9 +60,6 @@ app.get('/u/:shortURL', (req, res) => {
 
 //ADD
 app.get('/urls/new', (req, res) => {
-  if(!req.cookies["user_id"]){
-    return res.redirect("/login");
-  }
   let templateVars = {};
   templateVars.user = getUserObject(users, req.cookies.user_id);
   res.render('urls_new.ejs', templateVars);
@@ -108,7 +105,7 @@ app.post('/login', (req, res) => {
 
 //LOGOUT page
 app.post('/logout', (req, res) => {
-  res.cookie('user_id'); //clears login cookie
+  res.clearCookie('user_id'); //clears login cookie
   res.redirect('/urls');
 });
 
