@@ -60,6 +60,9 @@ app.get('/u/:shortURL', (req, res) => {
 
 //ADD
 app.get('/urls/new', (req, res) => {
+  if(!req.cookies["user_id"]){
+    return res.redirect("/login");
+  }
   let templateVars = {};
   templateVars.user = getUserObject(users, req.cookies.user_id);
   res.render('urls_new.ejs', templateVars);
