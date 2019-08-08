@@ -10,15 +10,24 @@ const generateRandomString = function(charsLength) {
 };
 //console.log(generateRandomString(6));
 
-const getUserByEmail = (email, users) => {
-  for (const user in users) {
-    if (users[user].email === email) {
-      return { valid: true, user };
-    } else {
-      return { valid: false };
-    }
+const getUseridByEmail = function(email, users) {
+  for (let userID in users) {
+    if (users[userID].email === email) {
+      return userID;
+    } 
   }
+  return false;
 };
 
+const getUserObject = function(usersObj, userid) {
+  if (usersObj[userid]) {
+    return usersObj[userid];
+  }
+  return {
+    id: '',
+    email: '',
+    password: '',
+  };
+};
 
-module.exports = { getUserByEmail, generateRandomString }
+module.exports = { getUseridByEmail, generateRandomString, getUserObject  }
