@@ -97,7 +97,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const user_ID = getUseridByEmail(req.body.email, users);
-  if (user_ID && (users[userid].password === req.body.password)) {
+  if (user_ID && (users[user_ID].password === req.body.password)) {
     res.cookie('user_id', user_ID);
     res.redirect('/urls');
   } else {
