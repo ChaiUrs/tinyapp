@@ -106,7 +106,7 @@ app.post('/login', (req, res) => {
 //LOGOUT page
 app.post('/logout', (req, res) => {
   res.clearCookie('user_id'); //clears login cookie
-  res.redirect('/urls');
+  res.redirect('/login');
 });
 
 //REGISTRATION page
@@ -121,7 +121,7 @@ app.post('/register', (req, res) => {
   if (req.body.email === '' || req.body.password === '') {
     res.status(400).send('Email or Password are empty!');
   } else if (getUseridByEmail(req.body.email, users)) { //from email lookup helper function
-    res.status(400).send("Email has been already registered");
+    res.status(400).send("This Email has been already registered");
   } else {
     let random_userID = generateRandomString(10); //to generate a random user ID
     users[random_userID] = {  //added a new user object
