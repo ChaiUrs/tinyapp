@@ -1,27 +1,19 @@
 
-const generateRandomString = function(charsLength) {
-  let newRandomURL = '';
-  let randomChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  for (let i = 0; i < charsLength; i++) {
-    let randomNumber = Math.floor(Math.random() * randomChars.length);
-    newRandomURL += randomChars[randomNumber];
-  }
-  return newRandomURL;
-};
-//console.log(generateRandomString(6));
+
 
 const express = require('express');
 const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { getUserByEmail, generateRandomString} = require('./helper.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set('view engine', 'ejs'); //Set ejs as the view engine
 
 let templateVars = {
-
+  user: users[user_id] //passed the user object
 };
 
 const urlDatabase = {
@@ -29,6 +21,19 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com",
   "cp26bm": "http://www.instagram.com"
 };
+
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "123asdfghjkl"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "lkjhgfdsa456"
+  }
+}
 
 //BROWSE
 app.get('/urls', (req, res) => {
@@ -101,6 +106,34 @@ app.post('/logout', (req, res) => {
   // clear username cookie
   res.clearCookie('username');
   res.redirect('/urls');
+});
+
+//Added a REGISTRATION page
+app.get('/register', (req, res) => {
+  let templateVars = {
+    username: ''
+  }
+  res.render('register.ejs', templateVars);
+});
+
+//Created POST /register endpoint
+app.post('/register', (req, res) => {
+  //Handling registration errors
+  if (email === '' || password === '') {
+    res.sendStatus(404).send('Email or Password are empty!');;
+  } else if (getUserByEmail(users, email)) {
+    res.sendStatus(400).send("Email has been already registered");
+  } else {
+    let random_userID = generateRandomString(10); //to generate a random user ID
+    users[random_userID] = {  //added a new user object
+      id,
+      email,
+      password
+    };
+    res.cookie('user_id', random_userID); //setting a user_id cookie containing the user's newly generated ID.
+    console.log(users);
+    res.redirect('/urls');  
+  }
 });
 
 //Handles all the requests defined in /urls

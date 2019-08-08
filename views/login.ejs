@@ -4,20 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+ 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
   integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
   crossorigin="anonymous">
 
-  <title>Register New User - TinyApp Example</title>
+  <title>Login - TinyApp Example</title>
 </head>
 <header>
   <% include ./partials/_header.ejs %>
 </header>
 <body>
-  <form method="POST" action="/register">
-    <h2>Create an account</h2>
+  <form method="POST" action="/login">
+    <h2>Login to your account</h2>
     <div>
       <label name="email">Email</label>
       <input type="email" class="form-control" name="email" placeholder="Enter Email" style="width:300px;">
@@ -28,8 +28,8 @@
       <input type="password" class="form-control" name="password" placeholder="Enter Password" style="width:300px;">
     </div>
 
-    <button type="submit" class="btn btn-primary btn-sm">Register</button>
-    
+    <button type="submit" class="btn btn-primary btn-sm">Login</button>
+
   </form>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
