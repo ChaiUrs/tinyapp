@@ -123,14 +123,14 @@ app.post('/register', (req, res) => {
   //Handling registration errors
   if (req.body.email === '' || req.body.password === '') {
     res.status(400).send('Email or Password are empty!');
-  } else if (getUseridByEmail(email, users)) { //from email lookup helper function
+  } else if (getUseridByEmail(req.body.email, users)) { //from email lookup helper function
     res.status(400).send("Email has been already registered");
   } else {
     let random_userID = generateRandomString(10); //to generate a random user ID
     users[random_userID] = {  //added a new user object
-      id,
-      email,
-      password
+      id: random_userID,
+      email: req.body.email,
+      password: req.body.password
     };
     res.cookie('user_id', random_userID); //setting a user_id cookie containing the user's newly generated ID.
     console.log(users);
