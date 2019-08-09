@@ -9,6 +9,8 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const { generateRandomString, getUseridByEmail, urlsForUser } = require('./helper.js');
 
+/*************** CONFIGURATION ***************/
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
