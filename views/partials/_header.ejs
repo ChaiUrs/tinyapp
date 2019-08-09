@@ -14,10 +14,10 @@
     </div>
 
     <div class="ml-auto p-2 bd-highlight">
-      <% if (locals.user) { %>
+      <% if (user) { %>
         <form class="form-inline" method="POST" action="/logout">
           <span class="nav-item nav-link text-dark" style="width:150px;">Logged In As:</span>
-          <span class="nav-item nav-link text-warning"><b><%=locals.user.email%></b></span>
+          <span class="nav-item nav-link text-warning"><b><%= email %></b></span>
           <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
         </form>
         <% } else { %>
