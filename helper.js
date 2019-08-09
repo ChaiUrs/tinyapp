@@ -1,4 +1,6 @@
 
+/*******************HELPER FUNCTIONS******************/
+
 let generateRandomString = function(charsLength) {
   let newRandomURL = '';
   let randomChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -13,9 +15,9 @@ let generateRandomString = function(charsLength) {
 
 let getUseridByEmail = (email) => {
   for (let user in users) {
-    //console.log(user);
+    console.log(user);
     if (users[user].email === email) {
-      return users[user].id;
+      return true;
     }
   }
   return false;
@@ -24,24 +26,13 @@ let getUseridByEmail = (email) => {
 
 let urlsForUser = (id) => {
   let urlsObj = {};
-  for (let urlID in urlDatabase) {
-    if (id === urlDatabase[urlID].userID) {
-      
-      urlsObj[urlID] = {
-        userID: urlDatabase[urlID].userID,
-        shortURL: urlDatabase[urlID].shortURL,
-        longURL: urlDatabase[urlID].longURL,
-        currentUser: id === urlDatabase[urlID].userID
-      }   
+  for (let shortURL in urlDatabase) {
+    if (urlDatabase[shortURL].user_id === id) {
+      urlsObj[shortURL] = urlDatabase[shortURL];
     }
   }
   return urlsObj;
 };
 
-//check if password matches userid
-let passwordMatch = (userID, password) => {
-  return bcrypt.compareSync(password, users[userID].password);
-}
-
-module.exports = { generateRandomString, getUseridByEmail, urlsForUser, passwordMatch }
+module.exports = { generateRandomString, getUseridByEmail, urlsForUser }
 
