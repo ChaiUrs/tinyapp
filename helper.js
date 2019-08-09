@@ -1,5 +1,5 @@
 
-const generateRandomString = function(charsLength) {
+let generateRandomString = function(charsLength) {
   let newRandomURL = '';
   let randomChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   for (let i = 0; i < charsLength; i++) {
@@ -10,24 +10,38 @@ const generateRandomString = function(charsLength) {
 };
 //console.log(generateRandomString(6));
 
-const getUseridByEmail = function(email, users) {
-  for (let userID in users) {
-    if (users[userID].email === email) {
-      return userID;
-    } 
+
+let getUseridByEmail = (email) => {
+  for (let user in users) {
+    //console.log(user);
+    if (users[user].email === email) {
+      return users[user].id;
+    }
   }
   return false;
 };
 
-const getUserObject = function(usersObj, userid) {
-  if (usersObj[userid]) {
-    return usersObj[userid];
+
+let urlsForUser = (id) => {
+  let urlsObj = {};
+  for (let urlID in urlDatabase) {
+    if (id === urlDatabase[urlID].userID) {
+      
+      urlsObj[urlID] = {
+        userID: urlDatabase[urlID].userID,
+        shortURL: urlDatabase[urlID].shortURL,
+        longURL: urlDatabase[urlID].longURL,
+        currentUser: id === urlDatabase[urlID].userID
+      }   
+    }
   }
-  return {
-    id: '',
-    email: '',
-    password: '',
-  };
+  return urlsObj;
 };
 
-module.exports = { getUseridByEmail, generateRandomString, getUserObject  }
+//check if password matches userid
+let passwordMatch = (userID, password) => {
+  return bcrypt.compareSync(password, users[userID].password);
+}
+
+module.exports = { generateRandomString, getUseridByEmail, urlsForUser, passwordMatch }
+
