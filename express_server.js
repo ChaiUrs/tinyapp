@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
-const { generateRandomString, getUseridByEmail, urlsForUser, passwordMatch } = require('./helper.js');
+//const { generateRandomString, getUseridByEmail, urlsForUser, passwordMatch } = require('/helper.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -23,24 +23,22 @@ app.use(cookieSession({
 /*************** URLs database ***************/
 //Added a new userID property to individual url objects within the urlDatabase
 let urlDatabase = { 
-  "b2xVn2": { longURL: "http://www.lighthouselabs.ca", userID: "userRandomID1" }, 
-  "9sm5xK": { longURL: "http://www.google.com", userID: "userRandomID2" }
+  "b2xVn2": { longURL: "http://www.lighthouselabs.ca", userID: "userRandomID" }, 
+  "9sm5xK": { longURL: "http://www.google.com", userID: "user2RandomID" }
 };
 
 
 /*************** Users object ***************/
 let users = { 
   "userRandomID": {
-    id: "userRandomID", 
+    id: "userRandomID1", 
     email: "user@example.com", 
-    password: "purple-monkey-dinosaur"
-     
+    password: "purple-monkey-dinosaur"   
   },
  "user2RandomID": {
-    id: "user2RandomID", 
+    id: "userRandomID2", 
     email: "user2@example.com", 
-    password: "dishwasher-funk"
-    
+    password: "dishwasher-funk"  
   }
 };
 
@@ -235,4 +233,50 @@ app.post('/logout', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+
+/*******************HELPER FUNCTIONS******************/
+
+let generateRandomString = function(charsLength) {
+  let newRandomURL = '';
+  let randomChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let i = 0; i < charsLength; i++) {
+    let randomNumber = Math.floor(Math.random() * randomChars.length);
+    newRandomURL += randomChars[randomNumber];
+  }
+  return newRandomURL;
+};
+//console.log(generateRandomString(6));
+
+
+let getUseridByEmail = (email) => {
+  for (let user in users) {
+    //console.log(user);
+    if (users[user].email === email) {
+      return users[user].id;
+    }
+  }
+};
+
+
+let urlsForUser = (id) => {
+  let urlsObj = {};
+  for (let urlID in urlDatabase) {
+    if (id === urlDatabase[urlID].userID) {
+      
+      urlsObj[urlID] = {
+        userID: urlDatabase[urlID].userID,
+        shortURL: urlDatabase[urlID].shortURL,
+        longURL: urlDatabase[urlID].longURL,
+        currentUser: id === urlDatabase[urlID].userID
+      }   
+    }
+  }
+  return urlsObj;
+};
+
+//check if password matches userid
+let passwordMatch = (userID, password) => {
+  return bcrypt.compareSync(password, users[userID].password);
+}
 
