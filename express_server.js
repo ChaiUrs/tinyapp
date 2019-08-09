@@ -110,7 +110,7 @@ app.get('/u/:shortURL', (req, res) => {
 
 /************** GENERATES shortURL ***************/
 app.post('/urls', (req, res) => {
-  if (!req.session.user_id){
+  if (req.session.user_id === undefined){
     res.status(403).send("Please LOGIN!!!");
     return;
   }
@@ -124,7 +124,7 @@ app.post('/urls', (req, res) => {
 
 /*************** UPDATES the URL ***************/
 app.post('/urls/:shortURL', (req, res) => {
-  if (!req.session.user_id) {
+  if (req.session.user_id === undefined) {
     res.status(403).send("Please LOGIN!!!");
     return;
   } else if (urlDatabase[req.params.shortURL].user_id !== req.session.user_id) {
@@ -142,7 +142,7 @@ app.post('/urls/:shortURL/delete', (req, res) => {
     delete urlDatabase[req.params.shortURL];
     res.redirect('/urls');
     return;
-  } else if (!req.session.user_id) {
+  } else if (req.session.user_id === undefined) {
     res.status(403).send("Please LOGIN!!!");
     return;
   } else if (req.session.user_id !== urlDatabase[req.params.shortURL].user_id) {
