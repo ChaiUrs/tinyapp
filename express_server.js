@@ -10,7 +10,6 @@ const bcrypt = require('bcrypt');
 const { generateRandomString, getUseridByEmail, urlsForUser } = require('./helper.js');
 
 /*************** CONFIGURATION ***************/
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
@@ -21,14 +20,12 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 //24 hours
 }));
 
-
 /*************** URLs database ***************/
 //Added a new userID property to individual url objects within the urlDatabase
 let urlDatabase = { 
   "b2xVn2": { longURL: "http://www.lighthouselabs.ca", user_id: 'aJ48lW' }, 
   "9sm5xK": { longURL: "http://www.google.com", user_id: 'aJ48lW' }
 };
-
 
 /*************** Users Object ***************/
 let users = { 
@@ -44,7 +41,6 @@ let users = {
   }
 };
 
-
 /*************** ROOT Page ***************/
 app.get('/', (req, res) => {
   if(users.hasOwnProperty(req.seesion.user_id)) { //checks if a property exists in an object or not
@@ -53,7 +49,6 @@ app.get('/', (req, res) => {
     res.redirect('/login');
   }
 });
-
 
 /*************** MAIN/INDEX Page ***************/
 app.get('/urls', (req, res) => {
@@ -69,7 +64,6 @@ app.get('/urls', (req, res) => {
   res.render('urls_index.ejs', templateVars);
 });
 
-
 /*************** Created new shortURLs Page ***************/
 app.get('/urls/new', (req, res) => {
   if (req.session.user_id === undefined) {
@@ -83,7 +77,6 @@ app.get('/urls/new', (req, res) => {
   };
   res.render('urls_new.ejs', templateVars);
 });
-
 
 /*************** SHOWS updated shortURLs Page ***************/
 app.get('/urls/:shortURL', (req, res) => {
@@ -104,7 +97,6 @@ app.get('/urls/:shortURL', (req, res) => {
   res.status(404).send('ERROR!!! This URL Page does not exist!');
 });
 
-
 /***************CHECKS if URL exists for given ID ***************/
 app.get('/u/:shortURL', (req, res) => {
   if (urlDatabase[req.params.shortURL]) {
@@ -115,7 +107,6 @@ app.get('/u/:shortURL', (req, res) => {
     res.redirect('/login');
   }
 });
-
 
 /************** GENERATES shortURL ***************/
 app.post('/urls', (req, res) => {
@@ -131,7 +122,6 @@ app.post('/urls', (req, res) => {
   res.redirect(`/urls/${newShortURL}`);
 });
 
-
 /*************** UPDATES the URL ***************/
 app.post('/urls/:shortURL', (req, res) => {
   if (!req.session.user_id) {
@@ -145,7 +135,6 @@ app.post('/urls/:shortURL', (req, res) => {
     res.redirect(`/urls/${req.params.shortURL}`);
   }
 });
-
 
 /*************** DELETES the URL ***************/
 app.post('/urls/:shortURL/delete', (req, res) => {
@@ -162,12 +151,10 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   }
 });
 
-
 /**************************************************/
 app.get('/urls.json', (req, res) => {
   res.json(urlDatabase);
 });
-
 
 /*************** LOGIN Page ***************/
 app.get('/login', (req, res) => {
@@ -197,7 +184,6 @@ app.post('/login', (req, res) => {
   res.status(403).send("INVALID E-MAIL & PASSWORD!!!");
   res.redirect("/urls");
 
-
 /*************** REGISTRATION Page ***************/
 app.get('/register', (req, res) => {
   let templateVars = {
@@ -208,7 +194,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  
+
   //Handling registration errors
   if (req.body.email === '' || req.body.password === '') {
     res.status(400).send('Please enter valid Email and Password!');
@@ -236,13 +222,13 @@ app.post('/register', (req, res) => {
   res.redirect('/urls');
 });
   
-
 /********** LOGOUT page => deletes cookie **********/
 app.post('/logout', (req, res) => {
   req.session = null;
   res.redirect('/urls');
 });
 
+/********** DEFAULT PORT **********/
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
