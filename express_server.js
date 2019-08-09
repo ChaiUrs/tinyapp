@@ -182,7 +182,7 @@ app.post('/login', (req, res) => {
     }
   }
   res.status(403).send("INVALID E-MAIL & PASSWORD!!!");
-  res.redirect("/urls");
+  res.redirect('/urls');
 
 /*************** REGISTRATION Page ***************/
 app.get('/register', (req, res) => {
