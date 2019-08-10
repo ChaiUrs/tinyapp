@@ -4,7 +4,7 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>Show URL - TinyApp</title>
+  <title>SHOW URL - TinyApp</title>
 </head>
 <header>
     <% include ./partials/_header %>
@@ -16,8 +16,9 @@
         <h5 class="card-title">TinyURL for: <%= longURL %></h5>  
         <p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
         <form method="POST" action="/urls/<%= shortURL %>">
-          <label for="new-url">New URL</label>
-          <input type="text" name="longURL"/><button type="submit">Edit URL</button>    
+          <label for="new-url">Enter New longURL:</label>
+          <input type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
+          <button type="submit" class="btn btn-primary btn-sm">Update URL</button>    
         </form>
       </div>
     <div class="card-footer text-muted"></div>
