@@ -7,7 +7,18 @@ const bodyParser = require('body-parser');
 //const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
-//const { generateRandomString, getUseridByEmail, urlsForUser } = require('./helper.js');
+const { generateRandomString, getUseridByEmail } = require('./helper.js');
+
+//This function is used to compare user id to database id
+let urlsForUser = (id) => {
+  let urlsObj = {};
+  for (let shortURL in urlDatabase) {
+    if (urlDatabase[shortURL].userId === id) {
+      urlsObj[shortURL] = urlDatabase[shortURL];
+    }
+  }
+  return urlsObj;
+};
 
 /*************** CONFIGURATION ***************/
 app.use(bodyParser.urlencoded({extended: true}));
@@ -17,7 +28,6 @@ app.set('view engine', 'ejs');
 app.use(cookieSession({
   name: 'session',
   keys: ['secret-key1', 'secret-key2'],
-  maxAge: 24 * 60 * 60 * 1000 //24 hours
 }));
 
 /*************** URLs database ***************/
@@ -27,7 +37,7 @@ let urlDatabase = {
   "9sm5xK": { longURL: "http://www.google.com", userId: 'aJ48lW' }
 };
 
-/*************** Users Object ***************/
+/*************** Users Object Database ***************/
 let users = {
   "userRandomID": {
     id: "userRandomID",
@@ -61,8 +71,8 @@ app.get('/urls', (req, res) => {
     user: req.session.userId,
     email: req.session.email
   };
-  console.log(templateVars);
-  console.log(urlDatabase);
+  //console.log(templateVars);
+  //console.log(urlDatabase);
   res.render('urls_index.ejs', templateVars);
 });
 
@@ -82,12 +92,10 @@ app.get('/urls/new', (req, res) => {
 
 /*************** SHOWS updated shortURLs Page ***************/
 app.get('/urls/:shortURL', (req, res) => {
-  console.log("edit");
   if (!req.session.userId) {
     res.status(403).send("Please LOGIN!!!");
     return res.redirect('/login');
   }
-  
   //if user is logged in & owns the URL for given ID
   let templateVars = {
     urls: urlDatabase,
@@ -102,7 +110,7 @@ app.get('/urls/:shortURL', (req, res) => {
 /***************CHECKS if URL exists for given ID ***************/
 app.get('/u/:shortURL', (req, res) => {
   let longURL = urlDatabase[req.params.shortURL].longURL;
-  res.redirect(longURL);
+  res.redirect(longURL); //please enter http:// as prefix
 });
 
 /************** GENERATES shortURL ***************/
@@ -134,7 +142,6 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   if (req.session.userId === urlDatabase[req.params.shortURL].userId) {
     delete urlDatabase[req.params.shortURL];
   }
-  console.log("delete");
   res.redirect('/urls');
 });
     
@@ -198,8 +205,8 @@ app.post('/register', (req, res) => {
     //set cookies
     req.session.userId = randomUserID;
     req.session.email = req.body.email;
-    res.redirect('/urls');
   }
+  res.redirect('/urls');
 });
  
 /********** LOGOUT page => deletes cookie **********/
@@ -212,40 +219,4 @@ app.post('/logout', (req, res) => {
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}!`);
 });
-
-
-/*******************HELPER FUNCTIONS******************/
-
-let generateRandomString = function(charsLength) {
-  let newRandomURL = '';
-  let randomChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  for (let i = 0; i < charsLength; i++) {
-    let randomNumber = Math.floor(Math.random() * randomChars.length);
-    newRandomURL += randomChars[randomNumber];
-  }
-  return newRandomURL;
-};
-//console.log(generateRandomString(6));
-
-
-let getUseridByEmail = (users, email) => {
-  for (let user in users) {
-    console.log(user);
-    if (users[user].email === email) {
-      return true;
-    }
-  }
-  return false;
-};
-
-
-let urlsForUser = (id) => {
-  let urlsObj = {};
-  for (let shortURL in urlDatabase) {
-    if (urlDatabase[shortURL].userId === id) {
-      urlsObj[shortURL] = urlDatabase[shortURL];
-    }
-  }
-  return urlsObj;
-};
 

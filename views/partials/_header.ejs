@@ -8,23 +8,22 @@
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/urls">My URLs</a>
-      <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-    </div>
-
-    <div class="ml-auto p-2 bd-highlight">
-      <% if (user) { %>
-        <form class="form-inline" method="POST" action="/logout">
-          <span class="nav-item nav-link text-dark" style="width:150px;">Logged In As:</span>
-          <span class="nav-item nav-link text-warning"><b><%= email %></b></span>
-          <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
-        </form>
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/urls">My URLs</a>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+      </div>
+      <div class="ml-auto p-3 bd-highlight">
+        <% if (user) { %>
+          <form class="form-inline my-2 my-lg-0" method="POST" action="/logout">
+            <span class="nav-item nav-link text-dark">Logged In As:</span>
+            <span class="nav-item nav-link text-warning"><b><%= email %></b></span>
+            <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
+          </form>
         <% } else { %>
           <span class="form-inline">
-            <div class="navbar-nav">
-              <a class="navbar-brand nav-link" href="/login">Login</a>
-              <a class="navbar-brand nav-link" href="/register">Register</a>
+            <div class="navbar-nav navbar-right">
+              <a class="nav-item nav-link" href="/login"><b>LOGIN</b></a>
+              <a class="nav-item nav-link" href="/register"><b>REGISTER</b></a>
             </div>
           </span>
         <% } %>

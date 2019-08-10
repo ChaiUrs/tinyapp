@@ -13,7 +13,7 @@ let generateRandomString = function(charsLength) {
 //console.log(generateRandomString(6));
 
 
-let getUseridByEmail = (email) => {
+let getUseridByEmail = (users, email) => {
   for (let user in users) {
     console.log(user);
     if (users[user].email === email) {
@@ -23,16 +23,5 @@ let getUseridByEmail = (email) => {
   return false;
 };
 
-
-let urlsForUser = (id) => {
-  let urlsObj = {};
-  for (let shortURL in urlDatabase) {
-    if (urlDatabase[shortURL].user_id === id) {
-      urlsObj[shortURL] = urlDatabase[shortURL];
-    }
-  }
-  return urlsObj;
-};
-
-module.exports = { generateRandomString, getUseridByEmail, urlsForUser }
+module.exports = { generateRandomString, getUseridByEmail }
 
