@@ -8,8 +8,11 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["screenshot description"](#)
-!["screenshot description"](#)
+!["Screenshot of Registration Page"](https://github.com/ChaiUrs/tinyapp/blob/master/docs/1.%20registration-page.png)
+!["Screenshot of URL Master List Page before creating tiny URLs"](https://github.com/ChaiUrs/tinyapp/blob/master/docs/2.%20urls-page.png)
+!["Screenshot of New URL Page - creating tiny URL for long URL"](https://github.com/ChaiUrs/tinyapp/blob/master/docs/3.%20new%20url-page.png)
+!["Screenshot of Show URL Page - shows short URL for long URL with update option](https://github.com/ChaiUrs/tinyapp/blob/master/docs/4.%20short%20url-page.png)
+!["Screenshot of Index Page - My URLs - shows the list of short URLS and corressponding long URLs with edit and delete options"](https://github.com/ChaiUrs/tinyapp/blob/master/docs/5.%20index%20urls-page.png)
 
 ## Dependencies
 
