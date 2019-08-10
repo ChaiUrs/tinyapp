@@ -12,12 +12,12 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
-      <div class="ml-auto p-3 bd-highlight">
+      <div class="ml-auto p-2 bd-highlight">
         <% if (user) { %>
           <form class="form-inline my-2 my-lg-0" method="POST" action="/logout">
             <span class="nav-item nav-link text-dark">Logged In As:</span>
             <span class="nav-item nav-link text-warning"><b><%= email %></b></span>
-            <button type="submit" class="btn btn-outline-dark btn-sm">Logout</button>
+            <button type="submit" class="btn btn-outline-dark btn-sm">LOGOUT</button>
           </form>
         <% } else { %>
           <span class="form-inline">
